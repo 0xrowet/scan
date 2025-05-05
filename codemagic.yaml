@@ -1,0 +1,25 @@
+workflows:
+  scanner-kasir:
+    name: Scanner Kasir
+    environment:
+      groups:
+        - keystore
+      vars:
+        CM_KEYSTORE_PATH: "$CM_BUILD_DIR/keystore.jks"
+    scripts:
+      - name: Install dependencies
+        script: |
+          flutter packages pub get
+      - name: Build Android
+        script: |
+          flutter build apk --release
+          # Untuk app bundle:
+          # flutter build appbundle --release
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk
+      # Untuk app bundle:
+      # - build/app/outputs/bundle/release/app-release.aab
+    publishing:
+      email:
+        recipients:
+          - klutukg608@gmail.com
